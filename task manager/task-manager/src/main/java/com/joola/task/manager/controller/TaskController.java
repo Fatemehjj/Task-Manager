@@ -19,11 +19,11 @@ public class TaskController {
     public ResponseEntity<String> saveTask(@RequestBody @NonNull UserDto input){
         return service.saveTask(input.getTask(), input.getYear(), input.getMonth(), input.getDay());
     }
- @GetMapping("month/{month}")
+ @GetMapping("in/{month}")
     public ResponseEntity<List<UserDto>> getTaskByMonth(@PathVariable @NonNull String month){
         return service.getTaskByMonth(month);
     }
-@GetMapping("date/{task}")
+@GetMapping("date for/{task}")
     public ResponseEntity<String> getDateForTask(@PathVariable @NonNull String task){
         return service.getDateForTask(task);
     }
