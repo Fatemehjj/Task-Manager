@@ -8,4 +8,5 @@ public class UserDto {
     int year;
     String month;
     int day;
+    String task_state;
 }
