@@ -1,7 +1,7 @@
 package com.joola.task.manager.model;
-
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NonNull;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -16,6 +16,9 @@ public class Task {
     private String task;
     @NotFound(action = NotFoundAction.EXCEPTION)
     private int year;
+    @NotFound(action = NotFoundAction.EXCEPTION)
+    @Column(name = "task_state")
+    private String taskState;
     @NotFound(action = NotFoundAction.EXCEPTION)
     private String month;
     @NotFound(action = NotFoundAction.EXCEPTION)
