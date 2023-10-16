@@ -31,4 +31,8 @@ public class TaskController {
     public ResponseEntity<String> daysLeftForATask(@PathVariable @NonNull String task){
     return service.daysLeftForATask(task);
     }
+    @PutMapping("finished/{task}")
+    public ResponseEntity<String> finishedTask(@PathVariable @NonNull String task){
+        return service.finishedTask(task);
+    }
 }
