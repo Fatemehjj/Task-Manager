@@ -1,7 +1,6 @@
 package com.joola.task.manager.model;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NonNull;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
