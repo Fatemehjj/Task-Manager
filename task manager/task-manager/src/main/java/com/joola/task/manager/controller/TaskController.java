@@ -5,7 +5,6 @@ import com.joola.task.manager.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,15 +22,15 @@ public class TaskController {
     public ResponseEntity<List<UserDto>> getTaskByMonth(@PathVariable @NonNull String month){
         return service.getTaskByMonth(month);
     }
-@GetMapping("date for/{task}")
+@GetMapping("date/{task}")
     public ResponseEntity<String> getDateForTask(@PathVariable @NonNull String task){
         return service.getDateForTask(task);
     }
-@GetMapping("days to/{task}")
-    public ResponseEntity<String> daysLeftForATask(@PathVariable @NonNull String task){
+@GetMapping("days/to/{task}")
+    public ResponseEntity<String> getRemainingDaysForATask(@PathVariable @NonNull String task){
     return service.daysLeftForATask(task);
     }
-    @PutMapping("finished/{task}")
+    @PutMapping("done/{task}")
     public ResponseEntity<String> finishedTask(@PathVariable @NonNull String task){
         return service.finishedTask(task);
     }
