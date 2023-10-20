@@ -92,10 +92,12 @@ public class TaskService {
         int day = entireTask.get().getDay();
         int month = calendar.get(Calendar.MONTH) + 1;
         String taskMonth = entireTask.get().getMonth();
-        int positionOfMonth = calculateMonths(taskMonth);
+        int positionOfMonth = MonthsCalculation(taskMonth);
         if (entireTask.get().getTaskState() == null) {
             if (month - positionOfMonth == 0) {
                 int remainingDays = day - dayOfMonth;
+                if (remainingDays<0)
+                    return new ResponseEntity<>("there is no more days left :(", HttpStatus.OK);
                 return new ResponseEntity<>(remainingDays + " Days Left To '" + entireTask.get().getTask() + "' :>", HttpStatus.OK);
             } else {
                 if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
@@ -109,6 +111,8 @@ public class TaskService {
                         }
                     }
                     int finalResult = remainingDays + daysBetweenMonths;
+                    if (finalResult<0)
+                     return new ResponseEntity<>("there is no more days left :(", HttpStatus.OK);
                     return new ResponseEntity<>(finalResult + " Days Left To '" + entireTask.get().getTask() + "' :>", HttpStatus.OK);
                 } else {
                     int remainingDays = 30 - dayOfMonth + day;
@@ -122,6 +126,8 @@ public class TaskService {
                     }
 
                     int finalResult = remainingDays + daysBetweenMonths;
+                    if (finalResult<0)
+                     return new ResponseEntity<>("there is no more days left :(", HttpStatus.OK);
                     return new ResponseEntity<>(finalResult + " Days Left To '" + entireTask.get().getTask() + "' :>", HttpStatus.OK);
                 }
             }
@@ -129,9 +135,7 @@ public class TaskService {
         return new ResponseEntity<>("task has been done ;)", HttpStatus.OK);
     }
    }
-
-
-        public int calculateMonths(String month){
+        public int MonthsCalculation(String month){
             return switch (month) {
                 case "january" -> 1;
                 case "february" -> 2;
