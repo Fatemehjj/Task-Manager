@@ -17,7 +17,7 @@ import java.util.Optional;
 @Service
 public class TaskService {
     @Autowired
-    TaskRepository repo;
+    private TaskRepository repo;
 
     public ResponseEntity<String> saveTask(String task, int year, String month, int day) {
         try {
