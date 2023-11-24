@@ -18,6 +18,7 @@ import java.util.Optional;
 public class TaskService {
     @Autowired
     private TaskRepository repo;
+    ServiceHelper helper;
 
     public ResponseEntity<String> saveTask(String task, int year, String month, int day) {
         try {
@@ -88,11 +89,14 @@ public class TaskService {
     public ResponseEntity<String> daysLeftForATask(String task) {
         Optional<Task> entireTask = repo.findByTaskName(task);
         Calendar calendar = Calendar.getInstance();
+
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
         int day = entireTask.get().getDay();
         int month = calendar.get(Calendar.MONTH) + 1;
+
         String taskMonth = entireTask.get().getMonth();
-        int positionOfMonth = MonthsCalculation(taskMonth);
+        int positionOfMonth = helper.MonthsCalculation(taskMonth);
+
         if (entireTask.get().getTaskState() == null) {
             if (month - positionOfMonth == 0) {
                 int remainingDays = day - dayOfMonth;
@@ -135,26 +139,9 @@ public class TaskService {
         return new ResponseEntity<>("task has been done ;)", HttpStatus.OK);
     }
    }
-        public int MonthsCalculation(String month){
-            return switch (month) {
-                case "january" -> 1;
-                case "february" -> 2;
-                case "march" -> 3;
-                case "april" -> 4;
-                case "may" -> 5;
-                case "june" -> 6;
-                case "july" -> 7;
-                case "august" -> 8;
-                case "september" -> 9;
-                case "october" -> 10;
-                case "november" -> 11;
-                case "december" -> 12;
-                default -> 0;
-            };
-        }
     @Transactional
     public ResponseEntity<String> finishedTask(String task) {
         repo.UpdateStateOfTask(task);
-        return new ResponseEntity<>("update task state successfully", HttpStatus.ACCEPTED);
+        return new ResponseEntity<>("updated task state successfully", HttpStatus.ACCEPTED);
     }
 }
