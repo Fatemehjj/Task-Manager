@@ -22,14 +22,16 @@ public class TaskService {
 
     public ResponseEntity<String> saveTask(String task, int year, String month, int day) {
         try {
-            if (!task.isBlank() && !month.isBlank() && year >= 1 && day >= 1 && day <= 31) {
+            if ( year >= 1 && day >= 1 && day <= 31) {
                 Task inputTask = new Task();
                 inputTask.setTask(task);
                 inputTask.setYear(year);
                 inputTask.setMonth(month);
                 inputTask.setDay(day);
+                inputTask.setTaskState("incomplete");
 
                 repo.save(inputTask);
+
                 return new ResponseEntity<>("task saved !", HttpStatus.CREATED);
             }
 
