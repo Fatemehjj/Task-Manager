@@ -3,6 +3,7 @@ package com.joola.task.manager.controller;
 import com.joola.task.manager.dto.UserDto;
 import com.joola.task.manager.service.TaskService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
@@ -23,19 +24,19 @@ public class TaskController {
         return service.saveTask(input.getTask(), input.getYear(), input.getMonth(), input.getDay());
     }
  @GetMapping("in/{month}")
-    public ResponseEntity<List<UserDto>> getTaskByMonth(@PathVariable @NonNull String month){
+    public ResponseEntity<List<UserDto>> getTaskByMonth(@PathVariable String month){
         return service.getTaskByMonth(month);
     }
 @GetMapping("date/{task}")
-    public ResponseEntity<String> getDateForTask(@PathVariable @NonNull String task){
+    public ResponseEntity<String> getDateForTask(@PathVariable String task){
         return service.getDateForTask(task);
     }
 @GetMapping("days/to/{task}")
-    public ResponseEntity<String> getRemainingDaysForATask(@PathVariable @NonNull String task){
+    public ResponseEntity<String> getRemainingDaysForATask(@PathVariable String task){
     return service.daysLeftForATask(task);
     }
     @PutMapping("done/{task}")
-    public ResponseEntity<String> finishedTask(@PathVariable @NonNull String task){
+    public ResponseEntity<String> finishedTask(@PathVariable String task){
         return service.finishedTask(task);
     }
 }
