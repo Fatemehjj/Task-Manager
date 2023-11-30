@@ -18,7 +18,6 @@ import java.util.Optional;
 public class TaskService {
     @Autowired
     private TaskRepository repo;
-    ServiceHelper helper;
 
     public ResponseEntity<String> saveTask(String task, int year, String month, int day) {
         try {
@@ -44,7 +43,7 @@ public class TaskService {
     public ResponseEntity<List<UserDto>> getTaskByMonth(String month) {
         try {
             Optional<List<Task>> findTask = repo.findByMonth(month);
-            if (findTask.get().size() != 0) {
+            if (!findTask.get().isEmpty()) {
                 List<UserDto> outputs = new ArrayList<>();
 
                 for (Task tasks : findTask.get()) {
@@ -91,7 +90,7 @@ public class TaskService {
     public ResponseEntity<String> daysLeftForATask(String task) {
         Optional<Task> entireTask = repo.findByTaskName(task);
         Calendar calendar = Calendar.getInstance();
-
+        ServiceHelper helper = new ServiceHelper();
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
         int day = entireTask.get().getDay();
         int month = calendar.get(Calendar.MONTH) + 1;
@@ -99,7 +98,7 @@ public class TaskService {
         String taskMonth = entireTask.get().getMonth();
         int positionOfMonth = helper.MonthsCalculation(taskMonth);
 
-        if (entireTask.get().getTaskState() == null) {
+        if (entireTask.get().getTaskState() == null || entireTask.get().getTaskState().equals("incomplete")) {
             if (month - positionOfMonth == 0) {
                 int remainingDays = day - dayOfMonth;
                 if (remainingDays<0)
@@ -143,7 +142,10 @@ public class TaskService {
    }
     @Transactional
     public ResponseEntity<String> finishedTask(String task) {
+       Optional<Task> isValid= repo.findByTaskName(task);
+        if (isValid.isPresent()){
         repo.UpdateStateOfTask(task);
-        return new ResponseEntity<>("updated task state successfully", HttpStatus.ACCEPTED);
+        return new ResponseEntity<>("updated task state successfully", HttpStatus.ACCEPTED);}
+        return new ResponseEntity<>("could not update the task ", HttpStatus.BAD_REQUEST);
     }
 }
