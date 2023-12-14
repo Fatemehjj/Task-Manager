@@ -16,4 +16,4 @@ and an endpoint for when the user finished a task(set position to done)
 
 # To Do
 1:spring security(authentication)
-2:validate domain objects 
+
