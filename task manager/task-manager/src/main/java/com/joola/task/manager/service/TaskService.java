@@ -94,17 +94,20 @@ public class TaskService {
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
         int day = entireTask.get().getDay();
         int month = calendar.get(Calendar.MONTH) + 1;
-
+        System.out.println(month);
         String taskMonth = entireTask.get().getMonth();
         int positionOfMonth = helper.MonthsCalculation(taskMonth);
+        System.out.println(positionOfMonth);
 
-        if (entireTask.get().getTaskState() == null || entireTask.get().getTaskState().equals("incomplete")) {
-            if (month - positionOfMonth == 0) {
+        if (entireTask.get().getTaskState().equals("incomplete")) {
+            if (positionOfMonth - month== 0) {
                 int remainingDays = day - dayOfMonth;
-                if (remainingDays<0)
-                    return new ResponseEntity<>("there is no more days left :(", HttpStatus.OK);
                 return new ResponseEntity<>(remainingDays + " Days Left To '" + entireTask.get().getTask() + "' :>", HttpStatus.OK);
-            } else {
+            }
+            else if (positionOfMonth -month <0) {
+                return new ResponseEntity<>("there is no more days left :(", HttpStatus.OK);
+            }
+            else {
                 if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
                     int remainingDays = 31 - dayOfMonth + day;
                     int daysBetweenMonths = 0;
